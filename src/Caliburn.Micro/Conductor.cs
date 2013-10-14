@@ -19,7 +19,7 @@
                 return;
             }
 
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) => {
+            CloseStrategy.Execute(this, new[] { ActiveItem }, (canClose, items) => {
                 if(canClose)
                     ChangeActiveItem(item, true);
                 else OnActivationProcessed(item, false);
@@ -36,7 +36,7 @@
                 return;
             }
 
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) => {
+            CloseStrategy.Execute(this, new[] { ActiveItem }, (canClose, items) => {
                 if(canClose)
                     ChangeActiveItem(default(T), close);
             });
@@ -45,9 +45,10 @@
         /// <summary>
         /// Called to check whether or not this instance can close.
         /// </summary>
-        /// <param name="callback">The implementor calls this action with the result of the close check.</param>
-        public override void CanClose(Action<bool> callback) {
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) => callback(canClose));
+		/// <param name="sender">The sender.</param>
+		/// <param name="callback">The implementor calls this action with the result of the close check.</param>
+        public override void CanClose(object sender, Action<bool> callback) {
+            CloseStrategy.Execute(sender, new[] { ActiveItem }, (canClose, items) => callback(canClose));
         }
 
         /// <summary>

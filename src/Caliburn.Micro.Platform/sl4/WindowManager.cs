@@ -248,7 +248,7 @@
 
                 bool runningAsync = false, shouldEnd = false;
 
-                guard.CanClose(canClose => {
+                guard.CanClose(model, canClose => {
                     Execute.OnUIThread(() => {
                         if(runningAsync && canClose) {
                             actuallyClosing = true;

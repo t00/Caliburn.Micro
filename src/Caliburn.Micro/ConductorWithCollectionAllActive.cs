@@ -76,9 +76,10 @@
                 /// <summary>
                 /// Called to check whether or not this instance can close.
                 /// </summary>
-                /// <param name="callback">The implementor calls this action with the result of the close check.</param>
-                public override void CanClose(Action<bool> callback) {
-                    CloseStrategy.Execute(items, (canClose, closable) => {
+				/// <param name="sender">The sender.</param>
+				/// <param name="callback">The implementor calls this action with the result of the close check.</param>
+                public override void CanClose(object sender, Action<bool> callback) {
+                    CloseStrategy.Execute(sender, items, (canClose, closable) => {
                         if (!canClose && closable.Any()) {
                             closable.OfType<IDeactivate>().Apply(x => x.Deactivate(true));
                             items.RemoveRange(closable);
@@ -130,7 +131,7 @@
                     }
 
                     if (close) {
-                        CloseStrategy.Execute(new[] {item}, (canClose, closable) => {
+                        CloseStrategy.Execute(this, new[] {item}, (canClose, closable) => {
                             if (canClose)
                                 CloseItemCore(item);
                         });

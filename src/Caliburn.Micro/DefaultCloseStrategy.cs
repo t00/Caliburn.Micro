@@ -23,18 +23,19 @@
         /// <summary>
         /// Executes the strategy.
         /// </summary>
-        /// <param name="toClose">Items that are requesting close.</param>
+		/// <param name="sender">The sender.</param>
+		/// <param name="toClose">Items that are requesting close.</param>
         /// <param name="callback">The action to call when all enumeration is complete and the close results are aggregated.
         /// The bool indicates whether close can occur. The enumerable indicates which children should close if the parent cannot.</param>
-        public void Execute(IEnumerable<T> toClose, Action<bool, IEnumerable<T>> callback) {
+        public void Execute(object sender, IEnumerable<T> toClose, Action<bool, IEnumerable<T>> callback) {
             finalResult = true;
             closable = new List<T>();
             guardMustCallEvaluate = false;
 
-            Evaluate(true, toClose.GetEnumerator(), callback);
+            Evaluate(sender, true, toClose.GetEnumerator(), callback);
         }
 
-        void Evaluate(bool result, IEnumerator<T> enumerator, Action<bool, IEnumerable<T>> callback) {
+        void Evaluate(object sender, bool result, IEnumerator<T> enumerator, Action<bool, IEnumerable<T>> callback) {
             finalResult = finalResult && result;
 
             var guardPending = false;
@@ -49,14 +50,14 @@
                 var guard = current as IGuardClose;
                 if (guard != null) {
                     guardPending = true;
-                    guard.CanClose(canClose =>{
+                    guard.CanClose(sender, canClose =>{
                         guardPending = false;
                         if (canClose) {
                             closable.Add(current);
                         }
                         if (guardMustCallEvaluate) {
                             guardMustCallEvaluate = false;
-                            Evaluate(canClose, enumerator, callback);
+                            Evaluate(sender, canClose, enumerator, callback);
                         } else {
                             finalResult = finalResult && canClose;  
                         }

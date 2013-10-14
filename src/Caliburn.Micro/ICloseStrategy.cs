@@ -10,9 +10,10 @@
         /// <summary>
         /// Executes the strategy.
         /// </summary>
-        /// <param name="toClose">Items that are requesting close.</param>
+		/// <param name="sender">The sender.</param>
+		/// <param name="toClose">Items that are requesting close.</param>
         /// <param name="callback">The action to call when all enumeration is complete and the close results are aggregated.
         /// The bool indicates whether close can occur. The enumerable indicates which children should close if the parent cannot.</param>
-        void Execute(IEnumerable<T> toClose, Action<bool, IEnumerable<T>> callback);
+        void Execute(object sender, IEnumerable<T> toClose, Action<bool, IEnumerable<T>> callback);
     }
 }
