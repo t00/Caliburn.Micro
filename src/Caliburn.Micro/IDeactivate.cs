@@ -16,6 +16,12 @@
         /// <param name="close">Indicates whether or not this instance is being closed.</param>
         void Deactivate(bool close);
 
+		/// <summary>
+		/// Called to check whether or not this instance can be deactivated.
+		/// </summary>
+		/// <value><c>true</c> if can be deactivated; otherwise, <c>false</c>.</value>
+		bool CanDeactivate();
+
         /// <summary>
         /// Raised after deactivation.
         /// </summary>

@@ -136,6 +136,11 @@
         /// <param name = "close">Inidicates whether this instance will be closed.</param>
         protected virtual void OnDeactivate(bool close) { }
 
+		/// <summary>
+		/// Called before deactivating.
+		/// </summary>
+		public virtual bool CanDeactivate() { return true; }
+
         /// <summary>
         /// Called to check whether or not this instance can close.
         /// </summary>

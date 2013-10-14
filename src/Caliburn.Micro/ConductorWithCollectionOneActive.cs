@@ -67,6 +67,10 @@
                         return;
                     }
 
+					var activeItem = ActiveItem as IDeactivate;
+					if(activeItem != null && !activeItem.CanDeactivate())
+						return;
+
                     ChangeActiveItem(item, false);
                 }
 
