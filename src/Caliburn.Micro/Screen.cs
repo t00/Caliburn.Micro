@@ -33,7 +33,7 @@
         /// <summary>
         /// Gets or Sets the Display Name
         /// </summary>
-        public string DisplayName {
+        public virtual string DisplayName {
             get { return displayName; }
             set {
                 displayName = value;
