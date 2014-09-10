@@ -285,10 +285,14 @@
                 this.model = model;
                 this.view = view;
 
-                var activatable = model as IActivate;
-                if (activatable != null) {
-                    activatable.Activate();
-                }
+				Execute.BeginOnUIThread(() =>
+				{
+					var activatable = model as IActivate;
+					if(activatable != null)
+					{
+						activatable.Activate();
+					}
+				});
 
                 var deactivatable = model as IDeactivate;
                 if (deactivatable != null) {
