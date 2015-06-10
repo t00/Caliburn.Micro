@@ -178,7 +178,7 @@
                 /// <param name="close">Inidicates whether this instance will be closed.</param>
                 protected override void OnDeactivate(bool close) {
                     if (close) {
-                        items.OfType<IDeactivate>().Apply(x => x.Deactivate(true));
+						items.OfType<IDeactivate>().Reverse().ToList().Apply(x => x.Deactivate(true));
                         items.Clear();
                     }
                     else {
